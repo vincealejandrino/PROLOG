@@ -1,7 +1,7 @@
 :- use_module(library(pce)).
 :- pce_image_directory('./icons'). 
 
-% Define symptoms
+% Define symptoms facts
 symptom(fever).
 symptom(cough).
 symptom(sore_throat).
@@ -26,7 +26,7 @@ symptom(sensitivity_to_light).
 symptom(itchy_eyes).
 symptom(sneezing).
 
-% Define diseases
+% Define diseases 
 disease(flu).
 disease(common_cold).
 disease(migraine).
@@ -75,7 +75,7 @@ has_disease(Patient, food_poisoning) :-
     has_symptom(Patient, diarrhea),
     has_symptom(Patient, dizziness).
 
-% Explain disease
+% Explain disease rules
 explain_disease(flu, 'Flu (Influenza): Symptoms: Fever, Cough, Sore Throat, Muscle Ache.\nRecommended Actions: Rest, stay hydrated, and consult a healthcare provider if symptoms worsen.').
 explain_disease(common_cold, 'Common Cold: Symptoms: Runny Nose, Sore Throat, Cough.\nRecommended Actions: Rest, drink plenty of fluids, and use over-the-counter cold remedies if necessary.').
 explain_disease(migraine, 'Migraine: Symptoms: Headache, Nausea, Sensitivity to Light.\nRecommended Actions: Rest in a dark, quiet room; use pain relievers; consult a healthcare provider for prescription medications if needed.').
@@ -89,13 +89,13 @@ start_gui :-
     new(Dialog, dialog('Consult MD')),
     send(Dialog, append, new(Name, text_item(name, 'Enter your name'))),
     send(Dialog, append, new(Symptom1, menu(symptom1, cycle))),
-    send_list(Symptom1, append, [fever, cough, sore_throat, runny_nose, headache, fatigue, chest_pain, difficulty_breathing, rash, nausea, vomiting, diarrhea, dizziness, loss_of_taste, loss_of_smell, muscle_ache, chills, sweating, weight_loss, abdominal_pain, sensitivity_to_light, itchy_eyes, sneezing]),
+    send_list(Symptom1, append, [abdominal_pain, chills, chest_pain, cough, diarrhea, difficulty_breathing, dizziness, fatigue, fever, headache, itchy_eyes, loss_of_smell, loss_of_taste, muscle_ache, nausea, rash, runny_nose, sensitivity_to_light, sneezing, sore_throat, sweating, vomiting, weight_loss]),
     send(Dialog, append, new(Symptom2, menu(symptom2, cycle))),
-    send_list(Symptom2, append, [none, fever, cough, sore_throat, runny_nose, headache, fatigue, chest_pain, difficulty_breathing, rash, nausea, vomiting, diarrhea, dizziness, loss_of_taste, loss_of_smell, muscle_ache, chills, sweating, weight_loss, abdominal_pain, sensitivity_to_light, itchy_eyes, sneezing]),
+    send_list(Symptom2, append, [none, abdominal_pain, chills, chest_pain, cough, diarrhea, difficulty_breathing, dizziness, fatigue, fever, headache, itchy_eyes, loss_of_smell, loss_of_taste, muscle_ache, nausea, rash, runny_nose, sensitivity_to_light, sneezing, sore_throat, sweating, vomiting, weight_loss]),
     send(Dialog, append, new(Symptom3, menu(symptom3, cycle))),
-    send_list(Symptom3, append, [none, fever, cough, sore_throat, runny_nose, headache, fatigue, chest_pain, difficulty_breathing, rash, nausea, vomiting, diarrhea, dizziness, loss_of_taste, loss_of_smell, muscle_ache, chills, sweating, weight_loss, abdominal_pain, sensitivity_to_light, itchy_eyes, sneezing]),
+    send_list(Symptom3, append, [none, abdominal_pain, chills, chest_pain, cough, diarrhea, difficulty_breathing, dizziness, fatigue, fever, headache, itchy_eyes, loss_of_smell, loss_of_taste, muscle_ache, nausea, rash, runny_nose, sensitivity_to_light, sneezing, sore_throat, sweating, vomiting, weight_loss]),
     send(Dialog, append, new(Symptom4, menu(symptom4, cycle))),
-    send_list(Symptom4, append, [none, fever, cough, sore_throat, runny_nose, headache, fatigue, chest_pain, difficulty_breathing, rash, nausea, vomiting, diarrhea, dizziness, loss_of_taste, loss_of_smell, muscle_ache, chills, sweating, weight_loss, abdominal_pain, sensitivity_to_light, itchy_eyes, sneezing]),
+    send_list(Symptom4, append, [none, abdominal_pain, chills, chest_pain, cough, diarrhea, difficulty_breathing, dizziness, fatigue, fever, headache, itchy_eyes, loss_of_smell, loss_of_taste, muscle_ache, nausea, rash, runny_nose, sensitivity_to_light, sneezing, sore_throat, sweating, vomiting, weight_loss]),
     send(Dialog, append, button(submit, message(@prolog, diagnose_gui, Name?selection, Symptom1?selection, Symptom2?selection, Symptom3?selection, Symptom4?selection))),
     send(Dialog, open).
 
@@ -110,7 +110,7 @@ diagnose_gui(Name, Symptom1, Symptom2, Symptom3, Symptom4) :-
     send(@display, inform, Explanation),
     retractall(has_symptom(Name, _)).
 
-% Expert System Logic
+% consultmd Logic
 diagnose(Patient, Explanation) :-
     (   has_disease(Patient, Disease) ->
         explain_disease(Disease, DiseaseExplanation),
