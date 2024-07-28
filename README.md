@@ -70,6 +70,7 @@ Explanations: Defined using explain_disease/2 predicates.
 GUI Definition: Created using the xpce library with dialog elements for user input.
 Diagnosis Logic: The diagnose_gui/4 predicate handles user input, calls the diagnosis logic, and displays the result.
 
-TO RUN
-?- cd /path/to/your/MCO2     pwd: to check the path
+**TO RUN**
+?- cd /path/to/your/MCO2    
+pwd: to check the path
 ?- consult('consult_md.pl').
